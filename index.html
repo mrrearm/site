@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mr Rearm - Shake Your Mind!</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Arial',sans-serif;background:#0a0a0a;color:#fff;overflow-x:hidden;line-height:1.6}
+.animated-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:radial-gradient(circle at 20% 50%,#00ffff40 0%,transparent 50%),radial-gradient(circle at 80% 20%,#00e6ff40 0%,transparent 50%);animation:moveBackground 20s ease-in-out infinite}
+@keyframes moveBackground{0%,100%{transform:translateX(0) translateY(0)}50%{transform:translateX(15px) translateY(-8px)}}
+.grid-lines{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:0.15;background-image:linear-gradient(rgba(0,255,255,0.6) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,255,0.6) 1px,transparent 1px);background-size:40px 40px;animation:gridPulse 4s ease-in-out infinite}
+@keyframes gridPulse{0%,100%{opacity:0.15}50%{opacity:0.35}}
+.header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.95);backdrop-filter:blur(15px);border-bottom:2px solid #00ffff;box-shadow:0 2px 30px rgba(0,255,255,0.5);z-index:1000;padding:0.6rem 1rem}
+.nav{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+.logo{font-size:1.6rem;font-weight:bold;background:linear-gradient(45deg,#00ffff,#00e6ff,#00ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px #00ffff;animation:logoGlow 2s ease-in-out infinite}
+@keyframes logoGlow{0%,100%{text-shadow:0 0 30px #00ffff}50%{text-shadow:0 0 40px #00ffff,0 0 60px #00e6ff}}
+.nav-menu{display:flex;list-style:none;gap:1rem}
+.nav-item a{color:#fff;text-decoration:none;padding:0.4rem 0.8rem;border:1px solid transparent;transition:all 0.3s ease;font-size:0.85rem}
+.nav-item a:hover{color:#00ffff;border-color:#00ffff;box-shadow:0 0 20px #00ffff;text-shadow:0 0 15px #00ffff}
+.mobile-menu-btn{display:none;background:none;border:none;color:#00ffff;font-size:1.5rem;cursor:pointer;padding:0.5rem}
+.mobile-menu{display:none;position:absolute;top:100%;left:0;width:100%;background:rgba(10,10,10,0.98);backdrop-filter:blur(20px);border-bottom:2px solid #00ffff}
+.mobile-menu.active{display:block;animation:slideDown 0.3s ease-out}
+@keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.mobile-menu .nav-item a{display:block;padding:0.8rem 2rem;border-bottom:1px solid rgba(0,255,255,0.3)}
+.hero{min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 1rem 1rem;position:relative}
+.hero-content{position:relative;z-index:1;margin-top: 2rem} /* Aggiunto spazio sopra */
+.hero h1{font-size:clamp(2rem,5vw,3rem);margin-bottom:0.8rem;background:linear-gradient(45deg,#00ffff,#00e6ff,#00ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:textGlow 3s ease-in-out infinite}
+@keyframes textGlow{0%,100%{filter:drop-shadow(0 0 20px #00ffff)}50%{filter:drop-shadow(0 0 25px #00e6ff)}}
+.hero p{font-size:clamp(0.9rem,2.5vw,1.1rem);margin-bottom:1.5rem;color:#ccc}
+.cta-button{display:inline-block;padding:0.7rem 1.3rem;background:linear-gradient(45deg,#00ffff,#00e6ff);color:#000;text-decoration:none;font-weight:bold;border-radius:50px;box-shadow:0 0 40px rgba(0,255,255,0.8);transition:all 0.3s ease;font-size:0.9rem;overflow:hidden;position:relative;margin-bottom:2rem}
+.cta-button:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(0,255,255,1)}
+.cyber-logo-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.cyber-logo {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 10, 20, 0.7);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.8),
+    0 0 40px rgba(0, 200, 255, 0.6),
+    inset 0 0 15px rgba(0, 255, 255, 0.5);
+  border: 3px solid #00ffff;
+  animation: pulse 2s ease-in-out infinite alternate;
+}
+.cyber-m, .cyber-r {
+  position: relative;
+  font-size: 4rem;
+  font-weight: 900;
+  font-family: 'Arial Black', sans-serif;
+  background: linear-gradient(45deg, #00ffff, #00e6ff, #00ccff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 
+    0 0 15px #00ffff,
+    0 0 30px #00e6ff,
+    0 0 45px rgba(0, 204, 255, 0.7);
+  animation: textGlowLogo 3s ease-in-out infinite;
+}
+.cyber-m {
+  transform: translateX(-5px);
+}
+.cyber-r {
+  transform: translateX(5px);
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 
+      0 0 20px rgba(0, 255, 255, 0.8),
+      0 0 40px rgba(0, 200, 255, 0.6),
+      inset 0 0 15px rgba(0, 255, 255, 0.5);
+  }
+  100% {
+    box-shadow: 
+      0 0 30px rgba(0, 255, 255, 1),
+      0 0 60px rgba(0, 200, 255, 0.8),
+      inset 0 0 25px rgba(0, 255, 255, 0.7);
+  }
+}
+@keyframes textGlowLogo {
+  0%, 100% {
+    text-shadow: 
+      0 0 15px #00ffff,
+      0 0 30px #00e6ff,
+      0 0 45px rgba(0, 204, 255, 0.7);
+  }
+  50% {
+    text-shadow: 
+      0 0 25px #00ffff,
+      0 0 45px #00e6ff,
+      0 0 65px rgba(0, 204, 255, 0.9);
+  }
+}
+.section{padding:2rem 1rem;max-width:1200px;margin:0 auto;opacity:0;transform:translateY(30px);transition:all 0.8s ease-out}
+.section.visible{opacity:1;transform:translateY(0)}
+.section h2{font-size:clamp(1.5rem,4vw,2.2rem);text-align:center;margin-bottom:1.5rem;background:linear-gradient(45deg,#00ffff,#00e6ff,#00ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin:1.5rem 0}
+.card{background:rgba(0,255,255,0.08);backdrop-filter:blur(10px);border:2px solid #00ffff;border-radius:12px;padding:1.2rem;transition:all 0.3s ease;box-shadow:0 0 25px rgba(0,255,255,0.3)}
+.card:hover{transform:translateY(-8px);box-shadow:0 15px 40px rgba(0,255,255,0.6);border-color:#00e6ff;background:rgba(0,255,255,0.15)}
+.card h3{color:#00ffff;margin-bottom:0.8rem;font-size:1.2rem;text-shadow:0 0 15px rgba(0,255,255,0.7)}
+.card p{font-size:0.9rem;line-height:1.4}
+.video-container{position:relative;width:100%;height:0;padding-bottom:56.25%;margin:0;overflow:hidden;border-radius:8px}
+.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:8px}
+.social-section{text-align:center;margin:2rem 0;padding:1.5rem 1rem}
+.social-links{display:flex;justify-content:center;gap:1.2rem;margin-top:1.5rem;flex-wrap:wrap}
+.social-item{display:flex;flex-direction:column;align-items:center;gap:0.6rem}
+.social-icon-decoration{font-size:1.8rem;color:#00ffff;text-shadow:0 0 20px #00ffff;animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0px)}50%{transform:translateY(-6px)}}
+.social-link{display:inline-flex;align-items:center;justify-content:center;width:50px;height:50px;background:linear-gradient(45deg,#00ffff,#00e6ff);border-radius:50%;color:#000;text-decoration:none;font-size:1.3rem;transition:all 0.4s ease;box-shadow:0 0 25px rgba(0,255,255,0.8)}
+.social-link:hover{transform:translateY(-8px) scale(1.15);box-shadow:0 15px 40px rgba(0,255,255,1)}
+.footer{background:rgba(10,10,10,0.95);text-align:center;padding:1rem;border-top:2px solid #00ffff;margin-top:0}
+
+/* Stili per il nuovo modulo contatti */
+.contact-form {
+    background: rgba(0,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 0 25px rgba(0,255,255,0.3);
+    margin: 1.5rem auto;
+    max-width: 600px;
+    border: 2px solid #00ffff;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 1rem;
+    color: #00ffff;
+    text-shadow: 0 0 10px rgba(0,255,255,0.7);
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    background: rgba(0,10,20,0.7);
+    border: 1px solid #00ffff;
+    border-radius: 6px;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #00e6ff;
+    box-shadow: 0 0 15px rgba(0,255,255,0.5);
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.contact-form button {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background: linear-gradient(45deg,#00ffff,#00e6ff);
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0,255,255,0.5);
+    font-size: 1rem;
+}
+
+.contact-form button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,255,255,0.8);
+}
+
+@media (max-width: 768px) {
+    .nav-menu{display:none}
+    .mobile-menu-btn{display:block}
+    .header{padding:0.5rem 1rem}
+    .logo{font-size:1.4rem}
+    .hero{min-height:60vh;padding:70px 1rem 1rem}
+    .hero-content {
+      margin-top: 1.5rem; /* Spazio ridotto su mobile */
+    }
+    .cyber-logo {
+      width: 120px;
+      height: 120px;
+    }
+    .cyber-m, .cyber-r {
+      font-size: 3rem;
+    }
+    .grid{grid-template-columns:1fr;gap:1rem}
+    .card{padding:1rem}
+    .social-links{gap:1rem}
+    .social-link{width:45px;height:45px;font-size:1.1rem}
+    .social-icon-decoration{font-size:1.5rem}
+    .section{padding:1.5rem 1rem}
+    .social-section{padding:1.2rem 1rem;margin:1.5rem 0}
+    .footer{padding:1rem}
+    .video-container{padding-bottom:56.25%}
+    .contact-form {
+        padding: 1.5rem;
+        margin: 1rem auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero{min-height:50vh;padding:60px 0.8rem 0.8rem}
+    .hero h1{font-size:1.8rem;margin-bottom:0.6rem}
+    .hero p{font-size:0.85rem;margin-bottom:1.2rem}
+    .cta-button{padding:0.6rem 1.1rem;font-size:0.85rem;margin-bottom:1.5rem}
+    .cyber-logo {
+      width: 100px;
+      height: 100px;
+    }
+    .cyber-m, .cyber-r {
+      font-size: 2.5rem;
+    }
+    .section{padding:1.2rem 0.8rem}
+    .section h2{margin-bottom:1.2rem}
+    .card{padding:0.9rem}
+    .card h3{font-size:1.1rem;margin-bottom:0.6rem}
+    .card p{font-size:0.85rem}
+    .social-section{padding:1rem 0.8rem}
+    .social-links{gap:0.8rem}
+    .social-link{width:40px;height:40px;font-size:1rem}
+    .social-icon-decoration{font-size:1.3rem}
+    .footer{padding:0.8rem}
+    .nav-item a{font-size:0.8rem;padding:0.3rem 0.6rem}
+    .mobile-menu .nav-item a{padding:0.7rem 1.5rem}
+    .contact-form {
+        padding: 1.2rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .hero h1{font-size:1.6rem}
+    .hero p{font-size:0.8rem}
+    .cyber-logo {
+      width: 80px;
+      height: 80px;
+    }
+    .cyber-m, .cyber-r {
+      font-size: 2rem;
+    }
+    .section h2{font-size:1.3rem}
+    .card h3{font-size:1rem}
+    .card p{font-size:0.8rem}
+    .social-link{width:35px;height:35px;font-size:0.9rem}
+    .social-icon-decoration{font-size:1.2rem}
+    .contact-form {
+        padding: 1rem;
+    }
+}
+</style>
+</head>
+<body>
+<div class="animated-bg"></div>
+<div class="grid-lines"></div>
+
+<header class="header">
+<nav class="nav">
+<div class="logo">Mr Rearm</div>
+<ul class="nav-menu">
+<li class="nav-item"><a href="#home">Home</a></li>
+<li class="nav-item"><a href="#styles">Il tuo stile</a></li>
+<li class="nav-item"><a href="#about">Chi Siamo</a></li>
+<li class="nav-item"><a href="#services">Servizi</a></li>
+<li class="nav-item"><a href="#contact">Contatti</a></li>
+</ul>
+<button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+<div class="mobile-menu" id="mobileMenu">
+<ul>
+<li class="nav-item"><a href="#home" onclick="closeMobileMenu()">Home</a></li>
+<li class="nav-item"><a href="#styles" onclick="closeMobileMenu()">Stile</a></li>
+<li class="nav-item"><a href="#about" onclick="closeMobileMenu()">Chi Siamo</a></li>
+<li class="nav-item"><a href="#services" onclick="closeMobileMenu()">Servizi</a></li>
+<li class="nav-item"><a href="#contact" onclick="closeMobileMenu()">Contatti</a></li>
+</ul>
+</div>
+</nav>
+</header>
+
+<section id="home" class="hero">
+<div class="hero-content">
+<h1>Shake Your Mind!</h1>
+<p>Innovazione tecnologica e creatività digitale per il futuro</p>
+<a href="#styles" class="cta-button">Scopri di più</a>
+<div class="cyber-logo-container">
+  <div class="cyber-logo">
+    <span class="cyber-m">M</span>
+    <span class="cyber-r">R</span>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- Resto del codice rimane invariato -->
+<section id="styles" class="section">
+<h2>Fantasia e professionalità</h2>
+<div class="grid">
+<div class="card">
+<h3>Il tuo stile</h3>
+<p>Organizziamo le tue idee per farle corrispondere al meglio alle tue esigenze, creando uno stile unico, innovativo ed elegante, che t'identifica e mette in risalto tutta la brillantezza nel quale ti adoperi giorno dopo giorno con impegno e professionalità.</p>
+</div>
+<div class="card">
+<h3>Video Presentazione</h3>
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/OhyAVD5pr0Q" title="Mr Rearm - Video Presentazione" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+</div>
+<div class="card">
+<h3>La Nostra Offerta</h3>
+<p>Proponiamo sempre una soluzione interattiva e personalizzabile di anno in anno, di stile in stile, integrandoci sempre alla perfezione con tutte le piattaforme social.</p>
+</div>
+</div>
+</section>
+
+<section id="about" class="section">
+<h2>Chi Siamo</h2>
+<div class="grid">
+<div class="card">
+<h3>La Nostra Mission</h3>
+<p>Mr Rearm nasce dalla passione per l'innovazione tecnologica con l'obiettivo di rivoluzionare il modo in cui interagiamo con la tecnologia quotidiana.</p>
+</div>
+<div class="card">
+<h3>Il Team</h3>
+<p>Un gruppo di professionisti, designer e sviluppatori uniti dalla visione comune di creare prodotti che semplifichino la vita attraverso la tecnologia.</p>
+</div>
+</div>
+</section>
+
+<section id="services" class="section">
+<h2>Servizi</h2>
+<div class="grid">
+<div class="card">
+<h3>Siti Statici e Dinamici</h3>
+<p>Progettazione e realizzazione di siti custom utili per ogni esigenza, HTML5, i framework più gettonati ma anche CMS all'avanguardia come WordPress e Joomla.</p>
+</div>
+<div class="card">
+<h3>Brochure e presentazioni</h3>
+<p>Brochure e presentazioni elettroniche per mostrare la tua idea in un modo elegante e innovativo.</p>
+</div>
+<div class="card">
+<h3>Consulenza Tecnologica</h3>
+<p>Soluzioni personalizzate per integrare le ultime tecnologie nel tuo business.</p>
+</div>
+</div>
+</section>
+
+<section class="social-section">
+<h2>Seguici</h2>
+<p>Resta connesso per aggiornamenti e novità</p>
+<div class="social-links">
+<div class="social-item">
+<i class="fab fa-facebook-f social-icon-decoration"></i>
+<a href="https://facebook.com/mrrearm" class="social-link" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+</div>
+<div class="social-item">
+<i class="fab fa-instagram social-icon-decoration"></i>
+<a href="https://instagram.com/mrrearm" class="social-link" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+</div>
+<div class="social-item">
+<i class="fab fa-youtube social-icon-decoration"></i>
+<a href="https://youtube.com/@mrrearm?si=tKuKxEaj_EiuqBOj" class="social-link" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+</div>
+<div class="social-item">
+<i class="fab fa-github social-icon-decoration"></i>
+<a href="https://github.com/mrrearm" class="social-link" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+</div>
+<div class="social-item">
+<i class="fab fa-linkedin-in social-icon-decoration"></i>
+<a href="https://it.linkedin.com/in/ray-rearm-8290a4316" class="social-link" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+</div>
+</div>
+</section>
+
+<section id="contact" class="section">
+<h2>Contatti</h2>
+<div class="grid">
+<div class="card">
+<h3>Informazioni</h3>
+<p>Compila il form qui sotto per inviarci un messaggio.</p>
+</div>
+</div>
+
+<div class="contact-form">
+    <form action="https://formspree.io/f/xrbkkpay" method="POST">
+        <label>
+            La tua email:
+            <input type="email" name="email" required>
+        </label>
+        <label>
+            Il tuo messaggio:
+            <textarea name="message" required></textarea>
+        </label>
+        <button type="submit">Invia</button>
+    </form>
+</div>
+</section>
+
+<footer class="footer">
+<p>© 2025 Mr Rearm - Tutti i diritti riservati.</p>
+</footer>
+
+<script>
+function toggleMobileMenu(){document.getElementById('mobileMenu').classList.toggle('active')}
+function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('active')}
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible')})},{threshold:0.1});
+document.querySelectorAll('.section').forEach(section=>{observer.observe(section)});
+function createParticles(){const container=document.body;const particleCount=window.innerWidth<768?15:30;for(let i=0;i<particleCount;i++){const particle=document.createElement('div');particle.className='particle';const size=Math.random()*5+2;const posX=Math.random()*window.innerWidth;const duration=Math.random()*8+6;const delay=Math.random()*6;particle.style.width=`${size}px`;particle.style.height=`${size}px`;particle.style.left=`${posX}px`;particle.style.animationDuration=`${duration}s`;particle.style.animationDelay=`${delay}s`;container.appendChild(particle)}}
+window.onload=function(){createParticles()};
+</script>
+</body>
+</html>
